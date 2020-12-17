@@ -34,9 +34,11 @@ class SeatingArea
     end
     @has_changed = @spots != updated_spots
     @spots = updated_spots
+    puts "\n\n"
+    puts @spots
   end
 
-  private
+  protected
 
   def apply_rule(row, column)
     spot = @spots[row][column]
@@ -51,14 +53,6 @@ class SeatingArea
     end
   end
 
-  def on_empty(adjacent)
-    adjacent[OCCUPIED].zero? ? OCCUPIED : EMPTY
-  end
-
-  def on_occupied(adjacent)
-    adjacent[OCCUPIED] >= 4 ? EMPTY : OCCUPIED
-  end
-
   def check_adjacent(row, column)
     min_row, max_row, min_column, max_column = min_and_max_adjacent_spots(row, column)
     adjacent = { EMPTY => 0, OCCUPIED => 0, FLOOR => 0 }
@@ -68,6 +62,16 @@ class SeatingArea
       end
     end
     adjacent
+  end
+
+  def on_empty(adjacent)
+    adjacent[OCCUPIED].zero? ? OCCUPIED : EMPTY
+  end
+
+  private
+
+  def on_occupied(adjacent)
+    adjacent[OCCUPIED] >= 4 ? EMPTY : OCCUPIED
   end
 
   def min_and_max_adjacent_spots(row, column)
@@ -87,4 +91,4 @@ def part1
   puts "El número de sitios ocupados es #{occupied_count}"
 end
 
-part1
+# part1
