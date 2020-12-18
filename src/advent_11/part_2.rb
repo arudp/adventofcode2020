@@ -26,7 +26,7 @@ class Movement
     [@row_movement.call(row), @column_movement.call(column)]
   end
 
-  def stop_condition(row, column)
+  def stop?(row, column)
     @row_condition.call(row) || @column_condition.call(row, column)
   end
 
@@ -74,7 +74,7 @@ class VisibleSeatingArea < SeatingArea
   def get_first_seat(row, column, movement)
     found = FLOOR
     current_row, current_column = movement.next(row, column)
-    until found != FLOOR || movement.stop_condition(current_row, current_column)
+    until found != FLOOR || movement.stop?(current_row, current_column)
       found = @spots[current_row][current_column]
       current_row, current_column = movement.next(current_row, current_column)
     end
